@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GarmentsCalc BD — Fabric Consumption Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header class="app-header">
+  <div class="logo">Garments<span>Calc</span></div>
+  <div class="logo-sub">BD Edition v2</div>
+  <div class="header-right">Fabric · Thread · Trims · Costing</div>
+</header>
+
+<!-- ═══ NAV ══════════════════════════════════════════════ -->
+<nav class="nav-bar">
+  <div class="nav-tabs">
+    <button class="tab-btn active"  onclick="showPage('tshirt',this)">👕 T-Shirt</button>
+    <button class="tab-btn"         onclick="showPage('polo',this)">🧥 Collar &amp; Cuff</button>
+    <button class="tab-btn"         onclick="showPage('pant',this)">👖 Pant</button>
+    <button class="tab-btn"         onclick="showPage('pocket',this)">🧵 Pocket</button>
+    <button class="tab-btn"         onclick="showPage('booking',this)">📋 Booking Sheet</button>
+    <button class="tab-btn"         onclick="showPage('knitprice',this)">💰 Knit Price</button>
+    <button class="tab-btn"         onclick="showPage('trims',this)">🪡 Trims</button>
+    <button class="tab-btn"         onclick="showPage('sizeratio',this)">📐 Size Ratio</button>
+    <button class="tab-btn"         onclick="showPage('fob',this)">💵 FOB Costing</button>
+    <button class="tab-btn"         onclick="showPage('converter',this)">🔄 Converter</button>
+    <button class="tab-btn"         onclick="showPage('formulas',this)">📚 My Formulas</button>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ══════════════════════════════════════════════ -->
+<div class="main">
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 1 — T-SHIRT BODY CONSUMPTION
+────────────────────────────────────────────────────────── -->
+<div id="page-tshirt" class="page active">
+  <div class="pg-title">👕 T-Shirt Body Fabric Consumption</div>
+  <div class="pg-desc">GSM-based weight method for knit T-shirts. Supports CM and Inch input.</div>
+
+  <div class="toggle">
+    <button class="toggle-btn active" onclick="toggleUnit('tshirt','cm',this)">CM</button>
+    <button class="toggle-btn"        onclick="toggleUnit('tshirt','inch',this)">Inch</button>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Input Parameters</div>
+      <div class="g2">
+        <div class="field"><label>Body Length</label>
+          <div class="iw"><input type="number" id="ts-body" value="74" min="0" step="0.1"><span class="unit" id="ts-u1">cm</span></div></div>
+        <div class="field"><label>Sleeve Length</label>
+          <div class="iw"><input type="number" id="ts-sleeve" value="24" min="0" step="0.1"><span class="unit" id="ts-u2">cm</span></div></div>
+        <div class="field"><label>Half Chest</label>
+          <div class="iw"><input type="number" id="ts-chest" value="54" min="0" step="0.1"><span class="unit" id="ts-u3">cm</span></div></div>
+        <div class="field"><label>GSM</label>
+          <div class="iw"><input type="number" id="ts-gsm" value="210" min="1"><span class="unit">g/m²</span></div></div>
+        <div class="field"><label>Quantity (pcs)</label>
+          <input type="number" id="ts-qty" value="17" min="1"></div>
+        <div class="field"><label>Wastage %</label>
+          <div class="iw"><input type="number" id="ts-waste" value="9" min="0" max="50"><span class="unit">%</span></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Results</div>
+        <div class="result-box">
+          <div class="rl">Total Fabric</div>
+          <div class="rv"><span id="ts-r-total">—</span></div>
+          <div class="ru">kg</div>
+        </div>
+        <div class="r-grid">
+          <div class="r-item"><div class="rl">Per Piece</div><div class="rv" id="ts-r-per">—</div><div class="ru">kg/pc</div></div>
+          <div class="r-item"><div class="rl">Fabric Area</div><div class="rv" id="ts-r-area">—</div><div class="ru">m²/pc</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot o"></span>Formula</div>
+        <div class="fbox">
+          <div class="ft">✦ T-SHIRT (CM METHOD)</div>
+          <div class="fl">Len_m = (BodyLen + SleeveLen) × 0.01</div>
+          <div class="fl">Wid_m = HalfChest × 2 × 0.01</div>
+          <div class="fl">Area_m² = Len_m × Wid_m</div>
+          <div class="fl">Cons/pc = GSM × Area_m² ÷ 1000 &nbsp;[kg]</div>
+          <div class="fl">Total = Cons/pc × Qty × (1 + Waste%÷100)</div>
+          <div class="fc">// Inch: multiply by 0.0254 instead of 0.01</div>
+          <div class="fc">// Source: Industry standard (Audaces, GarmentCalc)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 2 — COLLAR & CUFF
+────────────────────────────────────────────────────────── -->
+<div id="page-polo" class="page">
+  <div class="pg-title">🧥 Collar &amp; Cuff Consumption</div>
+  <div class="pg-desc">Flat-knit collar and cuff fabric consumption for polo shirts.</div>
+
+  <div class="g2">
+    <!-- COLLAR -->
+    <div>
+      <div class="toggle">
+        <button class="toggle-btn active" onclick="toggleUnit('collar','cm',this)">CM</button>
+        <button class="toggle-btn"        onclick="toggleUnit('collar','inch',this)">Inch</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Collar</div>
+        <div class="field"><label>Collar Length</label>
+          <div class="iw"><input type="number" id="cl-len" value="42" min="0" step="0.1"><span class="unit" id="cl-u1">cm</span></div></div>
+        <div class="field"><label>Collar Width</label>
+          <div class="iw"><input type="number" id="cl-wid" value="6" min="0" step="0.1"><span class="unit" id="cl-u2">cm</span></div></div>
+        <div class="field"><label>GSM</label>
+          <div class="iw"><input type="number" id="cl-gsm" value="600" min="1"><span class="unit">g/m²</span></div></div>
+        <div class="field"><label>Quantity (pcs)</label>
+          <input type="number" id="cl-qty" value="12" min="1"></div>
+        <div class="field"><label>Wastage %</label>
+          <div class="iw"><input type="number" id="cl-waste" value="5" min="0"><span class="unit">%</span></div></div>
+        <div class="r-grid" style="margin-top:12px">
+          <div class="r-item"><div class="rl">Total</div><div class="rv" id="cl-r-total">—</div><div class="ru">kg</div></div>
+          <div class="r-item"><div class="rl">Per Piece</div><div class="rv" id="cl-r-per">—</div><div class="ru">kg/pc</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUFF -->
+    <div>
+      <div class="toggle">
+        <button class="toggle-btn active" onclick="toggleUnit('cuff','cm',this)">CM</button>
+        <button class="toggle-btn"        onclick="toggleUnit('cuff','inch',this)">Inch</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Cuff</div>
+        <div class="field"><label>Cuff Length</label>
+          <div class="iw"><input type="number" id="cu-len" value="15" min="0" step="0.1"><span class="unit" id="cu-u1">cm</span></div></div>
+        <div class="field"><label>Cuff Width</label>
+          <div class="iw"><input type="number" id="cu-wid" value="14" min="0" step="0.1"><span class="unit" id="cu-u2">cm</span></div></div>
+        <div class="field"><label>GSM</label>
+          <div class="iw"><input type="number" id="cu-gsm" value="600" min="1"><span class="unit">g/m²</span></div></div>
+        <div class="field"><label>Quantity (pcs)</label>
+          <input type="number" id="cu-qty" value="12" min="1"></div>
+        <div class="field"><label>Wastage %</label>
+          <div class="iw"><input type="number" id="cu-waste" value="5" min="0"><span class="unit">%</span></div></div>
+        <div class="r-grid" style="margin-top:12px">
+          <div class="r-item"><div class="rl">Total</div><div class="rv" id="cu-r-total">—</div><div class="ru">kg</div></div>
+          <div class="r-item"><div class="rl">Per Piece</div><div class="rv" id="cu-r-per">—</div><div class="ru">kg/pc</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot o"></span>Formula</div>
+    <div class="fbox">
+      <div class="ft">✦ RECT PIECE FORMULA (CM)</div>
+      <div class="fl">Area_m² = (Length × Width) ÷ 10,000</div>
+      <div class="fl">Cons/pc = GSM × Area_m² ÷ 1000 &nbsp;[kg]</div>
+      <div class="fl">Total = Cons/pc × Qty × (1 + Waste%÷100)</div>
+      <div class="fc">// Inch: divide by 1550.003 (exact in²→m² factor)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 3 — PANT (WOVEN, YARD-BASED)
+────────────────────────────────────────────────────────── -->
+<div id="page-pant" class="page">
+  <div class="pg-title">👖 Woven Pant Consumption</div>
+  <div class="pg-desc">Yard-based formula for woven trousers. Output in yards/piece and total yards.</div>
+  <div class="alert alert-info">ℹ️ Woven fabric is bought in <b>yards/meters</b>, not kg. This calculator gives yards output.</div>
+
+  <div class="toggle">
+    <button class="toggle-btn active" onclick="toggleUnit('pant','inch',this)">Inch</button>
+    <button class="toggle-btn"        onclick="toggleUnit('pant','cm',this)">CM</button>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Measurements</div>
+      <div class="g2">
+        <div class="field"><label>Inseam Length</label>
+          <div class="iw"><input type="number" id="pt-inseam" value="34" min="0" step="0.5"><span class="unit" id="pt-u1">inch</span></div></div>
+        <div class="field"><label>Front Rise</label>
+          <div class="iw"><input type="number" id="pt-rise" value="15" min="0" step="0.5"><span class="unit" id="pt-u2">inch</span></div></div>
+        <div class="field"><label>Waistband Height</label>
+          <div class="iw"><input type="number" id="pt-waist" value="1.5" min="0" step="0.5"><span class="unit" id="pt-u3">inch</span></div></div>
+        <div class="field"><label>Half Thigh</label>
+          <div class="iw"><input type="number" id="pt-thigh" value="13" min="0" step="0.5"><span class="unit" id="pt-u4">inch</span></div></div>
+        <div class="field"><label>Fabric Width (always inch)</label>
+          <div class="iw"><input type="number" id="pt-fabwid" value="58" min="1" step="1"><span class="unit">inch</span></div></div>
+        <div class="field"><label>Quantity (pcs)</label>
+          <input type="number" id="pt-qty" value="5" min="1"></div>
+        <div class="field"><label>Wastage %</label>
+          <div class="iw"><input type="number" id="pt-waste" value="5" min="0"><span class="unit">%</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Results</div>
+        <div class="result-box">
+          <div class="rl">Yards per Piece</div>
+          <div class="rv" id="pt-r-yds">—</div>
+          <div class="ru">yards/pc (incl. wastage)</div>
+        </div>
+        <div class="r-grid">
+          <div class="r-item"><div class="rl">Total Yards</div><div class="rv" id="pt-r-total">—</div><div class="ru">yards</div></div>
+          <div class="r-item"><div class="rl">Per Dozen</div><div class="rv" id="pt-r-dz">—</div><div class="ru">yds/dz</div></div>
+          <div class="r-item"><div class="rl">Meters/pc</div><div class="rv" id="pt-r-m">—</div><div class="ru">m/pc</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot o"></span>Formula</div>
+        <div class="fbox">
+          <div class="ft">✦ WOVEN PANT (YARD OUTPUT)</div>
+          <div class="fl">PanelArea = HalfThigh×2 × (Inseam+Rise+WB) [in²]</div>
+          <div class="fl">TotalArea = PanelArea × 2 (front+back)</div>
+          <div class="fl">Yds/pc = TotalArea ÷ FabricWidth ÷ 36</div>
+          <div class="fl">With wastage: × (1 + Waste%÷100)</div>
+          <div class="fc">// Source: textilelearner.net woven pant formula</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 4 — POCKET
+────────────────────────────────────────────────────────── -->
+<div id="page-pocket" class="page">
+  <div class="pg-title">🧵 Pocket Fabric Consumption</div>
+  <div class="pg-desc">Simple rectangle consumption — CM and Inch.</div>
+  <div class="toggle">
+    <button class="toggle-btn active" onclick="toggleUnit('pocket','cm',this)">CM</button>
+    <button class="toggle-btn"        onclick="toggleUnit('pocket','inch',this)">Inch</button>
+  </div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Pocket Measurements</div>
+      <div class="field"><label>Pocket Length</label>
+        <div class="iw"><input type="number" id="pk-len" value="15" min="0" step="0.1"><span class="unit" id="pk-u1">cm</span></div></div>
+      <div class="field"><label>Pocket Width</label>
+        <div class="iw"><input type="number" id="pk-wid" value="14" min="0" step="0.1"><span class="unit" id="pk-u2">cm</span></div></div>
+      <div class="field"><label>GSM</label>
+        <div class="iw"><input type="number" id="pk-gsm" value="210" min="1"><span class="unit">g/m²</span></div></div>
+      <div class="field"><label>Quantity (pcs)</label>
+        <input type="number" id="pk-qty" value="2" min="1"></div>
+      <div class="field"><label>Wastage %</label>
+        <div class="iw"><input type="number" id="pk-waste" value="4" min="0"><span class="unit">%</span></div></div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Results</div>
+        <div class="r-grid">
+          <div class="r-item"><div class="rl">Total Fabric</div><div class="rv" id="pk-r-total">—</div><div class="ru">kg</div></div>
+          <div class="r-item"><div class="rl">Per Piece</div><div class="rv" id="pk-r-per">—</div><div class="ru">kg/pc</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 5 — BOOKING SHEET
+────────────────────────────────────────────────────────── -->
+<div id="page-booking" class="page">
+  <div class="pg-title">📋 Booking Sheet — Marker Consumption</div>
+  <div class="pg-desc">Style-wise fabric consumption using Marker method (Woven/Knit). Output in kg/dozen.</div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>Order Info</div>
+    <div class="g3">
+      <div class="field"><label>Buyer</label><input type="text" id="bk-buyer" value="GYMSHARK"></div>
+      <div class="field"><label>Style / Order #</label><input type="text" id="bk-style" value="#ZP489 SWEAT SHIRT"></div>
+      <div class="field"><label>Body Fabric</label><input type="text" id="bk-fabric" value="100% COTTON"></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Marker Details (Inch)</div>
+      <div class="g2">
+        <div class="field"><label>Marker Length (inch)</label>
+          <input type="number" id="bk-mlen" value="92.04" step="0.01" min="0"></div>
+        <div class="field"><label>Cut Allowance Length (inch)</label>
+          <input type="number" id="bk-calen" value="2" step="0.01" min="0"></div>
+        <div class="field"><label>Marker Width (inch)</label>
+          <input type="number" id="bk-mwid" value="72" step="0.01" min="0"></div>
+        <div class="field"><label>Cut Allowance Width (inch)</label>
+          <input type="number" id="bk-cawid" value="2" step="0.01" min="0"></div>
+        <div class="field"><label>GSM</label>
+          <div class="iw"><input type="number" id="bk-gsm" value="280" min="1"><span class="unit">g/m²</span></div></div>
+        <div class="field"><label>Pcs in Marker</label>
+          <input type="number" id="bk-pcs" value="10" min="1"></div>
+        <div class="field"><label>Cutting Allowance %</label>
+          <div class="iw"><input type="number" id="bk-cutpct" value="6" min="0"><span class="unit">%</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Results</div>
+        <div class="result-box">
+          <div class="rl">Net Consumption / Marker</div>
+          <div class="rv" id="bk-r-net">—</div>
+          <div class="ru">kg</div>
+        </div>
+        <div class="r-grid">
+          <div class="r-item"><div class="rl">Con / Dozen</div><div class="rv" id="bk-r-dz">—</div><div class="ru">kg/dz</div></div>
+          <div class="r-item"><div class="rl">Con + Cutting%</div><div class="rv" id="bk-r-dz-cut">—</div><div class="ru">kg/dz</div></div>
+          <div class="r-item"><div class="rl">Req. Dia</div><div class="rv" id="bk-r-dia">—</div><div class="ru">inch</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot o"></span>Formula</div>
+        <div class="fbox">
+          <div class="ft">✦ MARKER / BOOKING SHEET</div>
+          <div class="fl">EffLen = MarkerLen + CutAllowLen</div>
+          <div class="fl">EffWid = MarkerWid + CutAllowWid</div>
+          <div class="fl">NetCon = GSM × EffLen × EffWid ÷ 1550 ÷ 1000 [kg]</div>
+          <div class="fl">Con/Dz = (NetCon ÷ PcsInMarker) × 12</div>
+          <div class="fl">Final = Con/Dz × (1 + CuttingPct÷100)</div>
+          <div class="fc">// 1550.003 is exact in²→m² factor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 6 — KNIT PRICE
+────────────────────────────────────────────────────────── -->
+<div id="page-knitprice" class="page">
+  <div class="pg-title">💰 Knit Fabric Price Per Meter</div>
+  <div class="pg-desc">Calculate price per meter from fabric weight, GSM and price per kg.</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Inputs</div>
+      <div class="field"><label>Fabric Weight (kg)</label><input type="number" id="kp-wt" value="1" step="0.01" min="0.01"></div>
+      <div class="field"><label>GSM</label><div class="iw"><input type="number" id="kp-gsm" value="240" min="1"><span class="unit">g/m²</span></div></div>
+      <div class="field"><label>Fabric Width (meter)</label><div class="iw"><input type="number" id="kp-wid" value="1.5" step="0.01" min="0.1"><span class="unit">m</span></div></div>
+      <div class="field"><label>Price Per Kg</label><input type="number" id="kp-ppkg" value="600" step="0.01" min="0"></div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Results</div>
+        <div class="result-box">
+          <div class="rl">Price Per Meter</div>
+          <div class="rv" id="kp-r-pm">—</div>
+        </div>
+        <div class="r-grid">
+          <div class="r-item"><div class="rl">Fabric Length</div><div class="rv" id="kp-r-len">—</div><div class="ru">m</div></div>
+          <div class="r-item"><div class="rl">Total Price</div><div class="rv" id="kp-r-total">—</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot o"></span>Formula</div>
+        <div class="fbox">
+          <div class="fl">FabLen = Weight × 1000 ÷ (GSM × Width) [m]</div>
+          <div class="fl">Price/m = (Weight × PricePerKg) ÷ FabLen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 7 — TRIMS (Thread, Button, Lace, Interlining)
+────────────────────────────────────────────────────────── -->
+<div id="page-trims" class="page">
+  <div class="pg-title">🪡 Trims &amp; Accessories Consumption</div>
+  <div class="pg-desc">Thread, Button, Lace/Tape, Interlining — all in one page.</div>
+
+  <div class="g2">
+    <!-- THREAD -->
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>🧶 Sewing Thread</div>
+      <div class="alert alert-warn">50/2 = 4000m/cone (knit) · 40/2 = 4000m · 20/2 = 3000m (woven)</div>
+      <div class="field"><label>Thread Consumption (m/garment)</label>
+        <div class="iw"><input type="number" id="th-cons" value="160" min="1"><span class="unit">m/pc</span></div></div>
+      <div class="field"><label>Thread Spec</label>
+        <select id="th-spec">
+          <option value="50/2">50/2 (Knit — 4000m/cone)</option>
+          <option value="40/2">40/2 (Woven — 4000m/cone)</option>
+          <option value="20/2">20/2 (Woven heavy — 3000m/cone)</option>
+          <option value="30/2">30/2 (4000m/cone)</option>
+          <option value="60/2">60/2 (4000m/cone)</option>
+        </select></div>
+      <div class="field"><label>Order Qty (pcs)</label><input type="number" id="th-qty" value="5000" min="1"></div>
+      <div class="field"><label>Wastage %</label>
+        <div class="iw"><input type="number" id="th-waste" value="15" min="0"><span class="unit">%</span></div></div>
+      <div class="r-grid" style="margin-top:14px">
+        <div class="r-item"><div class="rl">Cones Required</div><div class="rv" id="th-r-cones">—</div><div class="ru">cones (ceil)</div></div>
+        <div class="r-item"><div class="rl">Exact</div><div class="rv" id="th-r-exact">—</div></div>
+        <div class="r-item"><div class="rl">m / Cone</div><div class="rv" id="th-r-mcone">—</div></div>
+      </div>
+      <div class="fbox" style="margin-top:12px">
+        <div class="ft">✦ THREAD FORMULA</div>
+        <div class="fl">Cones = (Cons/pc × Qty) ÷ m_per_cone × (1+Waste%÷100)</div>
+        <div class="fc">// Source: textilelearner.net</div>
+      </div>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="card">
+      <div class="card-title"><span class="dot g"></span>🔘 Button</div>
+      <div class="alert alert-warn">Plastic: 1 GG = 1728 pcs, 5% waste · Metal: 1 G = 144 pcs, 6% waste</div>
+      <div class="field"><label>Pcs per Garment</label><input type="number" id="bt-pcs" value="12" min="1"></div>
+      <div class="field"><label>Button Type</label>
+        <select id="bt-type">
+          <option value="plastic">Plastic (Great Gross = 1728 pcs)</option>
+          <option value="metal">Metal (Gross = 144 pcs)</option>
+        </select></div>
+      <div class="field"><label>Order Qty (pcs)</label><input type="number" id="bt-qty" value="5000" min="1"></div>
+      <div class="field"><label>Wastage %</label>
+        <div class="iw"><input type="number" id="bt-waste" value="5" min="0"><span class="unit">%</span></div></div>
+      <div class="r-grid" style="margin-top:14px">
+        <div class="r-item"><div class="rl">Total Required</div><div class="rv" id="bt-r-total">—</div><div class="ru" id="bt-r-unit">GG</div></div>
+        <div class="r-item"><div class="rl">Raw (before ceil)</div><div class="rv" id="bt-r-raw">—</div></div>
+      </div>
+      <div class="fbox" style="margin-top:12px">
+        <div class="ft">✦ BUTTON FORMULA</div>
+        <div class="fl">Plastic: (Pcs×Qty ÷ 1728) × (1+5%)</div>
+        <div class="fl">Metal:   (Pcs×Qty ÷ 144)  × (1+6%)</div>
+        <div class="fc">// Do NOT round before decimal (industry rule)</div>
+      </div>
+    </div>
+
+    <!-- LACE -->
+    <div class="card">
+      <div class="card-title"><span class="dot o"></span>🎀 Lace / Tape / Elastic</div>
+      <div class="field"><label>Consumption per Garment (inch)</label>
+        <div class="iw"><input type="number" id="lc-cons" value="10" min="0" step="0.5"><span class="unit">inch/pc</span></div></div>
+      <div class="field"><label>Order Qty (pcs)</label><input type="number" id="lc-qty" value="5000" min="1"></div>
+      <div class="field"><label>Wastage %</label>
+        <div class="iw"><input type="number" id="lc-waste" value="5" min="0"><span class="unit">%</span></div></div>
+      <div class="r-grid" style="margin-top:14px">
+        <div class="r-item"><div class="rl">Total (ceil)</div><div class="rv" id="lc-r-total">—</div><div class="ru">yards</div></div>
+        <div class="r-item"><div class="rl">Exact</div><div class="rv" id="lc-r-exact">—</div><div class="ru">yards</div></div>
+      </div>
+      <div class="fbox" style="margin-top:12px">
+        <div class="fl">Total_yds = (Cons_in × Qty ÷ 36) × (1+Waste%÷100)</div>
+      </div>
+    </div>
+
+    <!-- INTERLINING -->
+    <div class="card">
+      <div class="card-title"><span class="dot p"></span>🪡 Interlining</div>
+      <div class="field"><label>Consumption (yds/dozen)</label>
+        <div class="iw"><input type="number" id="il-cons" value="2.40" step="0.1" min="0"><span class="unit">yds/dz</span></div></div>
+      <div class="field"><label>Order Qty (pcs)</label><input type="number" id="il-qty" value="5000" min="1"></div>
+      <div class="field"><label>Wastage %</label>
+        <div class="iw"><input type="number" id="il-waste" value="5" min="0"><span class="unit">%</span></div></div>
+      <div class="r-grid" style="margin-top:14px">
+        <div class="r-item"><div class="rl">Total Yards</div><div class="rv" id="il-r-total">—</div><div class="ru">yards</div></div>
+      </div>
+      <div class="fbox" style="margin-top:12px">
+        <div class="fl">Total = (Cons/dz ÷ 12) × Qty × (1+Waste%÷100)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 8 — SIZE RATIO
+────────────────────────────────────────────────────────── -->
+<div id="page-sizeratio" class="page">
+  <div class="pg-title">📐 Size Ratio Calculator</div>
+  <div class="pg-desc">Enter ratio per size — get quantity breakdown with wastage. e.g., S:M:L:XL = 1:2:2:1</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Inputs</div>
+      <div class="field"><label>Total Order Qty (pcs)</label><input type="number" id="sr-qty" value="5000" min="1"></div>
+      <div class="field"><label>Wastage %</label><div class="iw"><input type="number" id="sr-waste" value="5" min="0"><span class="unit">%</span></div></div>
+      <hr class="div">
+      <div class="card-title" style="margin-top:8px"><span class="dot o"></span>Size Ratios (0 = skip)</div>
+      <div class="g3">
+        <div class="field"><label>S</label><input type="number" id="sr-S" value="1" min="0"></div>
+        <div class="field"><label>M</label><input type="number" id="sr-M" value="1" min="0"></div>
+        <div class="field"><label>L</label><input type="number" id="sr-L" value="2" min="0"></div>
+        <div class="field"><label>XL</label><input type="number" id="sr-XL" value="1" min="0"></div>
+        <div class="field"><label>XXL</label><input type="number" id="sr-XXL" value="0" min="0"></div>
+        <div class="field"><label>3XL</label><input type="number" id="sr-3XL" value="0" min="0"></div>
+      </div>
+      <button class="btn btn-primary" onclick="calcSizeRatio()" style="margin-top:8px">⚡ Calculate</button>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot g"></span>Size Breakdown</div>
+      <div id="sr-result"><div style="color:var(--text3);font-size:14px">Enter ratios and click calculate.</div></div>
+      <div class="fbox" style="margin-top:16px">
+        <div class="ft">✦ SIZE RATIO FORMULA</div>
+        <div class="fl">Qty_S = (TotalQty × Ratio_S) ÷ SumOfRatios</div>
+        <div class="fl">With Wastage: × (1 + Waste%÷100)</div>
+        <div class="fc">// Source: textilelearner.net</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 9 — FOB COSTING
+────────────────────────────────────────────────────────── -->
+<div id="page-fob" class="page">
+  <div class="pg-title">💵 FOB / CIF Garment Costing</div>
+  <div class="pg-desc">Full cost build-up: Fabric + CM + Accessories → FOB → C&F → CIF. All values per dozen.</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Cost Inputs (per dozen)</div>
+      <div class="field"><label>Fabric Cost / Dozen ($)</label><input type="number" id="fob-fab" value="15.80" step="0.01" min="0"></div>
+      <div class="field"><label>Accessories Cost / Dozen ($)</label><input type="number" id="fob-acc" value="6.00" step="0.01" min="0"></div>
+      <div class="field"><label>CM / Dozen ($)</label><input type="number" id="fob-cm" value="10.00" step="0.01" min="0"></div>
+      <hr class="div">
+      <div class="card-title"><span class="dot o"></span>Cost Percentages</div>
+      <div class="g2">
+        <div class="field"><label>Transport (factory→port) %</label><div class="iw"><input type="number" id="fob-transport" value="0.5" step="0.1" min="0"><span class="unit">%</span></div></div>
+        <div class="field"><label>Clearing &amp; Forwarding %</label><div class="iw"><input type="number" id="fob-cf" value="2" step="0.1" min="0"><span class="unit">%</span></div></div>
+        <div class="field"><label>Overhead %</label><div class="iw"><input type="number" id="fob-overhead" value="0.5" step="0.1" min="0"><span class="unit">%</span></div></div>
+        <div class="field"><label>Profit %</label><div class="iw"><input type="number" id="fob-profit" value="10" step="0.5" min="0"><span class="unit">%</span></div></div>
+        <div class="field"><label>Freight %</label><div class="iw"><input type="number" id="fob-freight" value="4" step="0.1" min="0"><span class="unit">%</span></div></div>
+        <div class="field"><label>Insurance %</label><div class="iw"><input type="number" id="fob-insurance" value="1" step="0.1" min="0"><span class="unit">%</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>Costing Results</div>
+        <div class="r-grid">
+          <div class="r-item"><div class="rl">Subtotal /dz</div><div class="rv" id="fob-r-sub">—</div><div class="ru">$</div></div>
+          <div class="r-item"><div class="rl">Net Cost /dz</div><div class="rv" id="fob-r-net">—</div><div class="ru">$</div></div>
+          <div class="r-item"><div class="rl">Net FOB /dz</div><div class="rv" id="fob-r-fob-dz">—</div><div class="ru">$</div></div>
+          <div class="r-item"><div class="rl">Net FOB /pc</div><div class="rv" id="fob-r-fob-pc">—</div><div class="ru">$</div></div>
+          <div class="r-item"><div class="rl">C&amp;F /dz</div><div class="rv" id="fob-r-cf">—</div><div class="ru">$</div></div>
+          <div class="r-item"><div class="rl">CIF /dz</div><div class="rv" id="fob-r-cif">—</div><div class="ru">$</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot o"></span>Formula</div>
+        <div class="fbox">
+          <div class="ft">✦ FOB COSTING CHAIN</div>
+          <div class="fl">Subtotal = Fabric + Accessories + CM</div>
+          <div class="fl">NetCost = Subtotal + Transport + C&amp;F + Overhead</div>
+          <div class="fl">Net FOB = NetCost × (1 + Profit%÷100)</div>
+          <div class="fl">C&amp;F = FOB + Freight</div>
+          <div class="fl">CIF = C&amp;F + Insurance</div>
+          <div class="fc">// Source: textilelearner.net woven pant costing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 10 — CONVERTER
+────────────────────────────────────────────────────────── -->
+<div id="page-converter" class="page">
+  <div class="pg-title">🔄 Unit Converter</div>
+  <div class="pg-desc">All textile unit conversions in one place. Live calculation.</div>
+  <div class="g2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Length</div>
+        <div class="field"><label>Inch → CM</label>
+          <div class="iw"><input type="number" id="cv-inch" value="1" step="0.01"><span class="unit">in</span></div>
+          <div class="rv" id="cv-r-inch2cm" style="margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--accent);font-weight:700">—</div><div class="ru">cm</div></div>
+        <div class="field"><label>CM → Inch</label>
+          <div class="iw"><input type="number" id="cv-cm" value="2.54" step="0.01"><span class="unit">cm</span></div>
+          <div class="rv" id="cv-r-cm2inch" style="margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--accent);font-weight:700">—</div><div class="ru">inch</div></div>
+        <div class="field"><label>Meter → Yard</label>
+          <div class="iw"><input type="number" id="cv-meter" value="1" step="0.01"><span class="unit">m</span></div>
+          <div class="rv" id="cv-r-m2yd" style="margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--accent);font-weight:700">—</div><div class="ru">yards</div></div>
+        <div class="field"><label>Yard → Meter</label>
+          <div class="iw"><input type="number" id="cv-yard" value="1" step="0.01"><span class="unit">yd</span></div>
+          <div class="rv" id="cv-r-yd2m" style="margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--accent);font-weight:700">—</div><div class="ru">m</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot g"></span>GSM ↔ OZ/yd²</div>
+        <div class="field"><label>GSM → OZ</label>
+          <div class="iw"><input type="number" id="cv-gsm" value="200" step="1"><span class="unit">g/m²</span></div>
+          <div class="rv" id="cv-r-gsm2oz" style="margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--green);font-weight:700">—</div><div class="ru">oz/yd²</div></div>
+        <div class="field"><label>OZ → GSM</label>
+          <div class="iw"><input type="number" id="cv-oz" value="5.9" step="0.1"><span class="unit">oz/yd²</span></div>
+          <div class="rv" id="cv-r-oz2gsm" style="margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--green);font-weight:700">—</div><div class="ru">GSM</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="dot o"></span>Meter ↔ Kg</div>
+        <div class="field"><label>Fabric Length (m)</label><input type="number" id="cv-mlen" value="10" step="0.1" min="0"></div>
+        <div class="field"><label>Fabric Width (m)</label><input type="number" id="cv-mwid" value="1.5" step="0.01" min="0.1"></div>
+        <div class="field"><label>GSM</label><div class="iw"><input type="number" id="cv-mgsm" value="200" min="1"><span class="unit">g/m²</span></div></div>
+        <div class="rv" id="cv-r-m2kg" style="font-family:var(--mono);font-size:18px;color:var(--orange);font-weight:700;margin-bottom:16px">—</div>
+        <hr class="div">
+        <div class="field"><label>Weight (kg) → Length</label>
+          <div class="iw"><input type="number" id="cv-kgwt" value="30" step="0.1" min="0"><span class="unit">kg</span></div></div>
+        <div class="field"><label>Width (m)</label><div class="iw"><input type="number" id="cv-kgwid" value="1.5" step="0.01" min="0.1"><span class="unit">m</span></div></div>
+        <div class="field"><label>GSM</label><div class="iw"><input type="number" id="cv-kggsm" value="200" min="1"><span class="unit">g/m²</span></div></div>
+        <div class="rv" id="cv-r-kg2m" style="font-family:var(--mono);font-size:18px;color:var(--orange);font-weight:700">—</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot p"></span>Button Size</div>
+        <div class="field"><label>MM → Ligne</label>
+          <div class="iw"><input type="number" id="cv-btn-mm" value="14" step="0.1"><span class="unit">mm</span></div>
+          <div class="rv" id="cv-r-btn" style="margin-top:6px;font-family:var(--mono);font-size:18px;color:var(--purple);font-weight:700">—</div><div class="ru">Ligne</div></div>
+        <div class="field"><label>Ligne → MM</label>
+          <div class="iw"><input type="number" id="cv-btn-lg" value="22" step="0.1"><span class="unit">L</span></div>
+          <div class="rv" id="cv-r-btn-mm" style="margin-top:6px;font-family:var(--mono);font-size:18px;color:var(--purple);font-weight:700">—</div><div class="ru">mm</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────────
+     PAGE 11 — FORMULA LIBRARY
+────────────────────────────────────────────────────────── -->
+<div id="page-formulas" class="page">
+  <div class="pg-title">📚 Formula Library</div>
+  <div class="pg-desc">All built-in formulas with source references. Add your own custom formulas — saved in browser.</div>
+
+  <div class="sec-row">
+    <div><span class="tag">Built-in</span><span class="tag g">Custom</span></div>
+    <button class="btn btn-primary btn-sm" onclick="openAddModal()">＋ Add My Formula</button>
+  </div>
+
+  <!-- BUILT-IN -->
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">T-Shirt Body Consumption (CM & Inch)</div><div class="f-sub">Knit · GSM method · area-based</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="ft">SOURCE: Audaces.com + GarmentCalc.com</div>
+        <div class="fl">Len_m = (BodyLen + SleeveLen) × 0.01       [CM]</div>
+        <div class="fl">Wid_m = HalfChest × 2 × 0.01              [CM]</div>
+        <div class="fl">Area_m² = Len_m × Wid_m</div>
+        <div class="fl">Cons/pc (kg) = GSM × Area_m² ÷ 1000</div>
+        <div class="fl">Total = Cons/pc × Qty × (1 + Waste%÷100)</div>
+        <div class="fc">// Inch: multiply measurements by 0.0254</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">Collar / Cuff / Pocket (Rectangle)</div><div class="f-sub">Knit accessories · CM & Inch</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="fl">Area_m² = (Length × Width) ÷ 10,000    [CM]</div>
+        <div class="fl">Cons/pc (kg) = GSM × Area_m² ÷ 1000</div>
+        <div class="fl">Total = Cons/pc × Qty × (1 + Waste%÷100)</div>
+        <div class="fc">// Inch: divide by 1550.003 (exact in²→m²)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">Woven Pant Consumption (Yard Output)</div><div class="f-sub">Woven · Panel area method · yards/pc</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="ft">SOURCE: textilelearner.net — woven pant</div>
+        <div class="fl">PanelArea = (HalfThigh×2) × (Inseam+Rise+WB)  [in²]</div>
+        <div class="fl">TotalArea = PanelArea × 2  (front+back panels)</div>
+        <div class="fl">Yds/pc = TotalArea ÷ FabricWidth(in) ÷ 36</div>
+        <div class="fl">Final = Yds/pc × (1 + Waste%÷100)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">Booking Sheet — Marker Based</div><div class="f-sub">Woven/Knit · kg/dozen</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="fl">NetCon = GSM × (ML+CA_L) × (MW+CA_W) ÷ 1550 ÷ 1000  [kg]</div>
+        <div class="fl">Con/Dz = (NetCon ÷ PcsInMarker) × 12</div>
+        <div class="fl">Final = Con/Dz × (1 + Cutting%÷100)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">Sewing Thread Consumption</div><div class="f-sub">50/2=4000m · 40/2=4000m · 20/2=3000m</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="ft">SOURCE: textilelearner.net</div>
+        <div class="fl">Cones = (Cons/pc × Qty) ÷ m_per_cone × (1 + 15%÷100)</div>
+        <div class="fc">// Standard wastage = 15%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">Button Consumption (Plastic &amp; Metal)</div><div class="f-sub">GG=1728 pcs · G=144 pcs</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="ft">SOURCE: textilelearner.net</div>
+        <div class="fl">Plastic: (Pcs/pc × Qty) ÷ 1728 × 1.05   [GG]</div>
+        <div class="fl">Metal:   (Pcs/pc × Qty) ÷ 144  × 1.06   [G]</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">Lace / Tape · Interlining · Size Ratio</div><div class="f-sub">Accessories · textilelearner.net</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="fh">Lace (inches input → yards output):</div>
+        <div class="fl">Total_yds = (Cons_in × Qty ÷ 36) × (1+Waste%÷100)</div>
+        <div class="fh">Interlining (yds/dz input):</div>
+        <div class="fl">Total = (Cons/dz ÷ 12) × Qty × (1+Waste%÷100)</div>
+        <div class="fh">Size Ratio:</div>
+        <div class="fl">Qty_size = (TotalQty × Ratio_size) ÷ SumRatios × (1+Waste%÷100)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f-card">
+    <div class="f-card-head" onclick="toggleFCard(this)">
+      <div><div class="f-name">FOB → C&F → CIF Costing</div><div class="f-sub">Full cost chain per dozen</div></div>
+      <span class="f-tag">Built-in</span>
+    </div>
+    <div class="f-body">
+      <div class="fbox">
+        <div class="ft">SOURCE: textilelearner.net woven pant costing</div>
+        <div class="fl">Subtotal = Fabric/dz + Accessories/dz + CM/dz</div>
+        <div class="fl">NetCost  = Subtotal + Transport(0.5%) + C&amp;F(2%) + Overhead(0.5%)</div>
+        <div class="fl">Net FOB  = NetCost × (1 + Profit%÷100)</div>
+        <div class="fl">C&amp;F     = FOB + Freight(4%)</div>
+        <div class="fl">CIF      = C&amp;F + Insurance(1%)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM FORMULA LIST -->
+  <div id="custom-fl"></div>
+
+  <div class="add-box" onclick="openAddModal()">＋ Add Your Own Custom Formula</div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ═══ MODAL — ADD FORMULA ══════════════════════════════ -->
+<div class="overlay" id="addModal">
+  <div class="modal">
+    <h3>＋ Add Custom Formula</h3>
+    <div class="field"><label>Formula Name *</label>
+      <input type="text" id="nf-name" placeholder="e.g., Hoodie Fleece Consumption"></div>
+    <div class="field"><label>Category</label>
+      <input type="text" id="nf-cat" placeholder="e.g., Knit, Woven, Trims"></div>
+    <div class="field"><label>Formula Steps *</label>
+      <textarea id="nf-body" rows="5" placeholder="Area = Length × Width&#10;Cons/pc = GSM × Area / 1000&#10;Total = Cons/pc × Qty × (1 + Waste/100)"></textarea></div>
+    <div class="field"><label>Notes / Source</label>
+      <input type="text" id="nf-notes" placeholder="Optional — source or extra notes"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeAddModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFormula()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
