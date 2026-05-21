@@ -51,10 +51,11 @@ function convertKnitInputs() {
                 allowEl.value = (allowVal * 2.54).toFixed(2);
             }
             
-            const newActual = parseFloat(actualEl.value) || 0;
-            const newAllow = parseFloat(allowEl.value) || 0;
-            const totSpan = document.getElementById(pair.tot);
-            if (totSpan) totSpan.innerHTML = (newActual + newAllow).toFixed(1) + ' ' + knitUnit;
+            // DISABLED: Do not update total spans automatically
+            // const newActual = parseFloat(actualEl.value) || 0;
+            // const newAllow = parseFloat(allowEl.value) || 0;
+            // const totSpan = document.getElementById(pair.tot);
+            // if (totSpan) totSpan.innerHTML = (newActual + newAllow).toFixed(1) + ' ' + knitUnit;
         }
     });
 }
@@ -78,30 +79,11 @@ function toggleOptPanels() {
     calcKnitGarments();
 }
 
+// DISABLED - Automatic total update is turned off
 function updateKnitTotals() {
-    const pairs = [
-        { a: 'kg-bl', b: 'kg-bla', t: 'kg-blt' },
-        { a: 'kg-sl', b: 'kg-sla', t: 'kg-slt' },
-        { a: 'kg-hc', b: 'kg-hca', t: 'kg-hct' },
-        { a: 'kg-cl', b: 'kg-cla', t: 'kg-clt' },
-        { a: 'kg-cw', b: 'kg-cwa', t: 'kg-cwt' },
-        { a: 'kg-cul', b: 'kg-cula', t: 'kg-cul-t' },
-        { a: 'kg-cuw', b: 'kg-cuwa', t: 'kg-cuw-t' },
-        { a: 'kg-pl', b: 'kg-pla', t: 'kg-pl-t' },
-        { a: 'kg-pw', b: 'kg-pwa', t: 'kg-pw-t' },
-        { a: 'kg-hml', b: 'kg-hmla', t: 'kg-hml-t' },
-        { a: 'kg-hmw', b: 'kg-hmwa', t: 'kg-hmw-t' }
-    ];
-    
-    pairs.forEach(pair => {
-        const aVal = parseFloat(document.getElementById(pair.a)?.value) || 0;
-        const bVal = parseFloat(document.getElementById(pair.b)?.value) || 0;
-        const total = aVal + bVal;
-        const span = document.getElementById(pair.t);
-        if (span) span.innerHTML = total.toFixed(1) + ' ' + knitUnit;
-    });
-    
-    calcKnitGarments();
+    // This function is disabled to prevent automatic calculation
+    // User must click "Calculate" button to see results
+    return;
 }
 
 // ========== RESET ALL INPUTS ON PAGE LOAD ==========
@@ -109,10 +91,10 @@ function resetAllInputs() {
     // Reset all text inputs to EMPTY string (not zero)
     const allInputs = document.querySelectorAll('#page-knit input');
     allInputs.forEach(input => {
-        input.value = '';  // খালি রাখো
+        input.value = '';
     });
     
-    // Reset all total spans to 0.0 (eta thik ache)
+    // Reset all total spans to 0.0
     const allTotals = document.querySelectorAll('#page-knit .sa-tot');
     allTotals.forEach(span => {
         span.innerHTML = '0.0 ' + knitUnit;
@@ -325,8 +307,10 @@ function downloadKnitReport() {
             <div style="font-size: 12px; margin-top: 8px;">${totalAfter} (per dozen)</div>
         </div>
         
-        <table>
-            <thead><tr><th>Component</th><th>Per Dozen (kg/dz)</th><th>Per Piece (kg/pc)</th></tr></thead>
+        <table style="width:100%; border-collapse:collapse;">
+            <thead>
+                <tr style="background:#f8fafc;"><th>Component</th><th>Per Dozen (kg/dz)</th><th>Per Piece (kg/pc)</th></tr>
+            </thead>
             <tbody>
                 <tr><td style="font-weight:600;">👕 Body</td><td>${bodyDisp.split('|')[0] || '—'}</td><td>${bodyDisp.split('|')[1] || '—'}</td></tr>
                 ${collarHtml}
@@ -351,6 +335,39 @@ function downloadKnitReport() {
     }
 }
 
+// ========== FORCE RESET ALL INPUTS ON PAGE LOAD ==========
+function forceResetAllInputs() {
+    // Reset all text inputs to EMPTY
+    const allInputs = document.querySelectorAll('#page-knit input');
+    allInputs.forEach(input => {
+        input.value = '';
+    });
+    
+    // Reset all total spans to 0.0
+    const allTotals = document.querySelectorAll('#page-knit .sa-tot');
+    allTotals.forEach(span => {
+        span.innerHTML = '0.0 ' + knitUnit;
+    });
+    
+    // Reset all result displays
+    const resultIds = [
+        'kg-body-disp', 'kg-total-before', 'kg-total-after',
+        'kg-total-kg', 'kg-per-dz-label', 'kg-per-pc-label',
+        'kg-collar-disp', 'kg-cuff-disp', 'kg-pocket-disp', 'kg-halfmoon-disp'
+    ];
+    resultIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = '—';
+    });
+    
+    // Hide optional rows
+    const optionalRows = ['kg-collar-row', 'kg-cuff-row', 'kg-pocket-row', 'kg-halfmoon-row'];
+    optionalRows.forEach(id => {
+        const row = document.getElementById(id);
+        if (row) row.style.display = 'none';
+    });
+}
+
 // ========== EVENT LISTENERS ==========
 document.addEventListener('DOMContentLoaded', function() {
     // Unit buttons
@@ -370,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cb) cb.addEventListener('change', toggleOptPanels);
     });
     
-    // Input listeners
+    // Input listeners - NOTE: updateKnitTotals is disabled
     const inputs = [
         'kg-bl', 'kg-bla', 'kg-sl', 'kg-sla', 'kg-hc', 'kg-hca', 'kg-bgsm',
         'kg-cl', 'kg-cla', 'kg-cw', 'kg-cwa', 'kg-cgsm',
@@ -381,7 +398,10 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     inputs.forEach(id => {
         const input = document.getElementById(id);
-        if (input) input.addEventListener('input', updateKnitTotals);
+        if (input) input.addEventListener('input', function() {
+            // updateKnitTotals is disabled - no auto calculation
+            // User must click Calculate button
+        });
     });
     
     // Calculate button
@@ -396,12 +416,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const defaultBtn = document.querySelector('#page-knit .unit-bar .u-btn[data-unit="cm"]');
     if (defaultBtn) defaultBtn.classList.add('active');
     
-    // RESET ALL INPUTS TO EMPTY ON PAGE LOAD
-    resetAllInputs();
-    
-    // Initial calculation
-    setTimeout(() => {
-        calcKnitGarments();
-    }, 100);
+    // FORCE RESET ALL INPUTS TO EMPTY ON PAGE LOAD
+    forceResetAllInputs();
 });
-
