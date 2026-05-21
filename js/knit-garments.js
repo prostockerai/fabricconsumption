@@ -14,8 +14,19 @@ function setKnitUnit(unit) {
 }
 
 function updateUnitLabels() {
+    // Update all unit labels in the page
     document.querySelectorAll('#page-knit .unit-label').forEach(label => {
         label.textContent = '(' + knitUnit + ')';
+    });
+    
+    // Update all total span unit labels (the ones inside sa-tot)
+    const allTotals = document.querySelectorAll('#page-knit .sa-tot');
+    allTotals.forEach(span => {
+        // Get the current text content
+        let currentText = span.innerHTML;
+        // Replace cm or inch with new unit
+        currentText = currentText.replace(/\bcm\b|\binch\b/i, knitUnit);
+        span.innerHTML = currentText;
     });
 }
 
