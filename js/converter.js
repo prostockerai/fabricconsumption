@@ -481,6 +481,3 @@ function el(id) {
 window.calcKgToMeter = calcKgToMeter;
 window.calcMeterToKg = calcMeterToKg;
 window.calcYardToKg = calcYardToKg;
-
-// ========== INITIALIZE ON LOAD ==========
-document.addEventListener('DOMContentLoaded', initConverters);
