@@ -23,6 +23,15 @@ function initApp() {
     
     // Setup input listeners for all pages
     setupGlobalInputListeners();
+    
+    // Setup calculate buttons
+    setupCalculateButtons();
+    
+    // Setup PDF buttons
+    setupPdfButtons();
+    
+    // Setup unit toggle buttons
+    setupUnitButtons();
 }
 
 // Run all calculations on page load
@@ -98,8 +107,148 @@ function setupTabNavigation() {
     tabs.forEach(tab => {
         tab.addEventListener('click', function(e) {
             const pageId = this.getAttribute('data-page');
-            if (pageId) {
+            if (pageId && typeof showPage === 'function') {
                 showPage(pageId, this);
+            }
+        });
+    });
+}
+
+// Setup calculate buttons for all pages
+function setupCalculateButtons() {
+    // Knit Garments
+    const knitCalcBtn = document.getElementById('btn-calc-knit');
+    if (knitCalcBtn && typeof calcKnitGarments === 'function') {
+        knitCalcBtn.addEventListener('click', calcKnitGarments);
+    }
+    
+    // Knit Pant
+    const pantCalcBtn = document.getElementById('btn-calc-knitpant');
+    if (pantCalcBtn && typeof calcKnitPant === 'function') {
+        pantCalcBtn.addEventListener('click', calcKnitPant);
+    }
+    
+    // Woven Shirt
+    const wovenCalcBtn = document.getElementById('btn-calc-woven');
+    if (wovenCalcBtn && typeof calcWoven === 'function') {
+        wovenCalcBtn.addEventListener('click', calcWoven);
+    }
+    
+    // Booking Sheet
+    const bookingCalcBtn = document.getElementById('btn-calc-booking');
+    if (bookingCalcBtn && typeof calcBooking === 'function') {
+        bookingCalcBtn.addEventListener('click', calcBooking);
+    }
+    
+    // Knit Price
+    const priceCalcBtn = document.getElementById('btn-calc-knitprice');
+    if (priceCalcBtn && typeof calcKnitPrice === 'function') {
+        priceCalcBtn.addEventListener('click', calcKnitPrice);
+    }
+    
+    // Zipper
+    const zipperCalcBtn = document.getElementById('btn-calc-zipper');
+    if (zipperCalcBtn && typeof calcZipper === 'function') {
+        zipperCalcBtn.addEventListener('click', calcZipper);
+    }
+    
+    // Thread
+    const threadCalcBtn = document.getElementById('btn-calc-thread');
+    if (threadCalcBtn && typeof calcThread === 'function') {
+        threadCalcBtn.addEventListener('click', calcThread);
+    }
+    
+    // Button
+    const buttonCalcBtn = document.getElementById('btn-calc-button');
+    if (buttonCalcBtn && typeof calcButton === 'function') {
+        buttonCalcBtn.addEventListener('click', calcButton);
+    }
+    
+    // Interlining
+    const interliningCalcBtn = document.getElementById('btn-calc-interlining');
+    if (interliningCalcBtn && typeof calcInterlining === 'function') {
+        interliningCalcBtn.addEventListener('click', calcInterlining);
+    }
+    
+    // FOB
+    const fobCalcBtn = document.getElementById('btn-calc-fob');
+    if (fobCalcBtn && typeof calcFOB === 'function') {
+        fobCalcBtn.addEventListener('click', calcFOB);
+    }
+    
+    // Size Ratio
+    const ratioCalcBtn = document.getElementById('btn-calc-sizeratio');
+    if (ratioCalcBtn && typeof calcSizeRatio === 'function') {
+        ratioCalcBtn.addEventListener('click', calcSizeRatio);
+    }
+}
+
+// Setup PDF download buttons
+function setupPdfButtons() {
+    const knitPdfBtn = document.getElementById('btn-pdf-knit');
+    if (knitPdfBtn && typeof downloadKnitReport === 'function') {
+        knitPdfBtn.addEventListener('click', downloadKnitReport);
+    }
+    
+    const pantPdfBtn = document.getElementById('btn-pdf-knitpant');
+    if (pantPdfBtn && typeof downloadKnitPantReport === 'function') {
+        pantPdfBtn.addEventListener('click', downloadKnitPantReport);
+    }
+    
+    const wovenPdfBtn = document.getElementById('btn-pdf-woven');
+    if (wovenPdfBtn && typeof downloadWovenReport === 'function') {
+        wovenPdfBtn.addEventListener('click', downloadWovenReport);
+    }
+    
+    const bookingPdfBtn = document.getElementById('btn-pdf-booking');
+    if (bookingPdfBtn && typeof downloadBookingReport === 'function') {
+        bookingPdfBtn.addEventListener('click', downloadBookingReport);
+    }
+    
+    const pricePdfBtn = document.getElementById('btn-pdf-knitprice');
+    if (pricePdfBtn && typeof downloadKnitPriceReport === 'function') {
+        pricePdfBtn.addEventListener('click', downloadKnitPriceReport);
+    }
+    
+    const zipperPdfBtn = document.getElementById('btn-pdf-zipper');
+    if (zipperPdfBtn && typeof downloadZipperReport === 'function') {
+        zipperPdfBtn.addEventListener('click', downloadZipperReport);
+    }
+    
+    const fobPdfBtn = document.getElementById('btn-pdf-fob');
+    if (fobPdfBtn && typeof downloadFOBReport === 'function') {
+        fobPdfBtn.addEventListener('click', downloadFOBReport);
+    }
+}
+
+// Setup unit toggle buttons
+function setupUnitButtons() {
+    // Knit Garments unit buttons
+    const knitUnitBtns = document.querySelectorAll('#page-knit .unit-bar .u-btn');
+    knitUnitBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const unit = this.getAttribute('data-unit');
+            if (unit && typeof setKnitUnit === 'function') {
+                setKnitUnit(unit);
+                knitUnitBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                if (typeof updateKnitTotals === 'function') updateKnitTotals();
+                if (typeof calcKnitGarments === 'function') calcKnitGarments();
+            }
+        });
+    });
+    
+    // Knit Pant unit buttons
+    const pantUnitBtns = document.querySelectorAll('#page-knitpant .unit-bar .u-btn');
+    pantUnitBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const unit = this.getAttribute('data-unit');
+            if (unit && typeof setPantUnit === 'function') {
+                setPantUnit(unit);
+                pantUnitBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                if (typeof updatePantTotals === 'function') updatePantTotals();
+                if (typeof calcKnitPant === 'function') calcKnitPant();
             }
         });
     });
@@ -281,39 +430,6 @@ function setupSizeRatioListeners() {
         }
     });
 }
-
-// ========== EXPORT GLOBAL FUNCTIONS ==========
-window.showPage = showPage;
-window.setKnitUnit = setKnitUnit;
-window.setPantUnit = setPantUnit;
-window.calcKnitGarments = calcKnitGarments;
-window.calcKnitPant = calcKnitPant;
-window.calcWoven = calcWoven;
-window.calcBooking = calcBooking;
-window.calcKnitPrice = calcKnitPrice;
-window.calcZipper = calcZipper;
-window.calcThread = calcThread;
-window.calcButton = calcButton;
-window.calcInterlining = calcInterlining;
-window.calcFOB = calcFOB;
-window.calcSizeRatio = calcSizeRatio;
-window.saveMyFormula = saveMyFormula;
-window.deleteFormula = deleteFormula;
-window.deleteBookingRow = deleteBookingRow;
-window.addBookingRow = addBookingRow;
-window.calculateAllBookingRows = calculateAllBookingRows;
-window.updateKnitTotals = updateKnitTotals;
-window.updatePantTotals = updatePantTotals;
-window.updateWovenTotals = updateWovenTotals;
-window.updateBooking = updateBooking;
-window.updateKnitPrice = updateKnitPrice;
-window.updateZipper = updateZipper;
-window.updateThread = updateThread;
-window.updateButton = updateButton;
-window.updateInterlining = updateInterlining;
-window.updateFOB = updateFOB;
-window.updateSizeRatio = updateSizeRatio;
-window.toggleOptPanels = toggleOptPanels;
 
 // ========== START APP ==========
 document.addEventListener('DOMContentLoaded', initApp);
