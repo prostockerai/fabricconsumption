@@ -738,3 +738,36 @@ header {
     color: #000;
   }
 }
+
+
+
+
+/* Placeholder styling - light grey with opacity */
+.inp-a::placeholder,
+.inp-plain::placeholder,
+.inp-allow::placeholder {
+    color: #9ca3af !important;
+    opacity: 0.6 !important;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* For text inputs */
+.inp-a[type="text"]::placeholder {
+    color: #9ca3af !important;
+    opacity: 0.6 !important;
+}
+
+/* Focus effect */
+.inp-a:focus::placeholder,
+.inp-plain:focus::placeholder {
+    opacity: 0.3 !important;
+}
+
+/* Remove spinner buttons for text inputs */
+.inp-a[type="text"],
+.inp-plain[type="text"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
