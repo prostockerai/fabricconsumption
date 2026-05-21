@@ -374,6 +374,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const input = document.getElementById(id);
         if (input) input.addEventListener('input', function() {
             updateTotalSpans();
+            calcKnitGarments();  // Resualt Live update
         });
     });
     
