@@ -432,4 +432,9 @@ function setupSizeRatioListeners() {
 }
 
 // ========== START APP ==========
-document.addEventListener('DOMContentLoaded', initApp);
+// Wait for DOM and all scripts to load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
