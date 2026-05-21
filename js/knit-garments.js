@@ -10,6 +10,7 @@ function setKnitUnit(unit) {
     knitUnit = unit;
     updateUnitLabels();
     convertKnitInputs();
+    updateTotalSpans();
     calcKnitGarments();
 }
 
@@ -19,12 +20,10 @@ function updateUnitLabels() {
         label.textContent = '(' + knitUnit + ')';
     });
     
-    // Update all total span unit labels (the ones inside sa-tot)
+    // Update all total span unit labels
     const allTotals = document.querySelectorAll('#page-knit .sa-tot');
     allTotals.forEach(span => {
-        // Get the current text content
         let currentText = span.innerHTML;
-        // Replace cm or inch with new unit
         currentText = currentText.replace(/\bcm\b|\binch\b/i, knitUnit);
         span.innerHTML = currentText;
     });
@@ -33,47 +32,32 @@ function updateUnitLabels() {
 function convertKnitInputs() {
     // DISABLED - No automatic conversion and total update
     return;
-    
-    const isInch = (knitUnit === 'inch');
-    
-    const inputPairs = [
-        { actual: 'kg-bl', allow: 'kg-bla', tot: 'kg-blt' },
-        { actual: 'kg-sl', allow: 'kg-sla', tot: 'kg-slt' },
-        { actual: 'kg-hc', allow: 'kg-hca', tot: 'kg-hct' },
-        { actual: 'kg-cl', allow: 'kg-cla', tot: 'kg-clt' },
-        { actual: 'kg-cw', allow: 'kg-cwa', tot: 'kg-cwt' },
-        { actual: 'kg-cul', allow: 'kg-cula', tot: 'kg-cul-t' },
-        { actual: 'kg-cuw', allow: 'kg-cuwa', tot: 'kg-cuw-t' },
-        { actual: 'kg-pl', allow: 'kg-pla', tot: 'kg-pl-t' },
-        { actual: 'kg-pw', allow: 'kg-pwa', tot: 'kg-pw-t' },
-        { actual: 'kg-hml', allow: 'kg-hmla', tot: 'kg-hml-t' },
-        { actual: 'kg-hmw', allow: 'kg-hmwa', tot: 'kg-hmw-t' }
-    ];
-    
-    inputPairs.forEach(pair => {
-        const actualEl = document.getElementById(pair.actual);
-        const allowEl = document.getElementById(pair.allow);
-        if (actualEl && allowEl) {
-            let actualVal = parseFloat(actualEl.value) || 0;
-            let allowVal = parseFloat(allowEl.value) || 0;
-            
-            if (isInch) {
-                actualEl.value = (actualVal / 2.54).toFixed(2);
-                allowEl.value = (allowVal / 2.54).toFixed(2);
-            } else {
-                actualEl.value = (actualVal * 2.54).toFixed(2);
-                allowEl.value = (allowVal * 2.54).toFixed(2);
-            }
-            
-            // DISABLED: Do not update total spans automatically
-            // const newActual = parseFloat(actualEl.value) || 0;
-            // const newAllow = parseFloat(allowEl.value) || 0;
-            // const totSpan = document.getElementById(pair.tot);
-            // if (totSpan) totSpan.innerHTML = (newActual + newAllow).toFixed(1) + ' ' + knitUnit;
-        }
-    });
 }
 
+// ========== UPDATE ONLY TOTAL SPANS (Actual + Allowance) ==========
+function updateTotalSpans() {
+    const pairs = [
+        { a: 'kg-bl', b: 'kg-bla', t: 'kg-blt' },
+        { a: 'kg-sl', b: 'kg-sla', t: 'kg-slt' },
+        { a: 'kg-hc', b: 'kg-hca', t: 'kg-hct' },
+        { a: 'kg-cl', b: 'kg-cla', t: 'kg-clt' },
+        { a: 'kg-cw', b: 'kg-cwa', t: 'kg-cwt' },
+        { a: 'kg-cul', b: 'kg-cula', t: 'kg-cul-t' },
+        { a: 'kg-cuw', b: 'kg-cuwa', t: 'kg-cuw-t' },
+        { a: 'kg-pl', b: 'kg-pla', t: 'kg-pl-t' },
+        { a: 'kg-pw', b: 'kg-pwa', t: 'kg-pw-t' },
+        { a: 'kg-hml', b: 'kg-hmla', t: 'kg-hml-t' },
+        { a: 'kg-hmw', b: 'kg-hmwa', t: 'kg-hmw-t' }
+    ];
+    
+    pairs.forEach(pair => {
+        const aVal = parseFloat(document.getElementById(pair.a)?.value) || 0;
+        const bVal = parseFloat(document.getElementById(pair.b)?.value) || 0;
+        const total = aVal + bVal;
+        const span = document.getElementById(pair.t);
+        if (span) span.innerHTML = total.toFixed(1) + ' ' + knitUnit;
+    });
+}
 
 function toggleOptPanels() {
     const showCollar = document.getElementById('ck-collar')?.checked || false;
@@ -94,28 +78,18 @@ function toggleOptPanels() {
     calcKnitGarments();
 }
 
-// DISABLED - Automatic total update is turned off
-function updateKnitTotals() {
-    // This function is disabled to prevent automatic calculation
-    // User must click "Calculate" button to see results
-    return;
-}
-
 // ========== RESET ALL INPUTS ON PAGE LOAD ==========
 function resetAllInputs() {
-    // Reset all text inputs to EMPTY string (not zero)
     const allInputs = document.querySelectorAll('#page-knit input');
     allInputs.forEach(input => {
         input.value = '';
     });
     
-    // Reset all total spans to 0.0
     const allTotals = document.querySelectorAll('#page-knit .sa-tot');
     allTotals.forEach(span => {
         span.innerHTML = '0.0 ' + knitUnit;
     });
     
-    // Reset result displays to '—'
     const resultSpans = [
         'kg-body-disp', 'kg-total-before', 'kg-total-after', 
         'kg-total-kg', 'kg-per-dz-label', 'kg-per-pc-label',
@@ -126,7 +100,6 @@ function resetAllInputs() {
         if (span) span.innerText = '—';
     });
     
-    // Hide optional rows
     const optionalRows = ['kg-collar-row', 'kg-cuff-row', 'kg-pocket-row', 'kg-halfmoon-row'];
     optionalRows.forEach(id => {
         const row = document.getElementById(id);
@@ -135,19 +108,16 @@ function resetAllInputs() {
 }
 
 function calcKnitGarments() {
-    // DIVIDER: 1,00,00,000 for CM, 15,50,000 for Inch
     const div = knitUnit === 'inch' ? 1550000 : 10000000;
     const qty = parseFloat(document.getElementById('kg-qty')?.value) || 0;
     const waste = parseFloat(document.getElementById('kg-waste')?.value) || 0;
     
-    // Helper function to get value (returns 0 if empty or invalid)
     function getVal(id) {
         const val = parseFloat(document.getElementById(id)?.value);
         return isNaN(val) ? 0 : val;
     }
     
-    // ========== BODY ==========
-    // Formula: (Body Length + Sleeve Length) × (½ Chest) × 2 × GSM × Quantity / DIVIDER
+    // BODY
     const BL = getVal('kg-bl') + getVal('kg-bla');
     const SL = getVal('kg-sl') + getVal('kg-sla');
     const HC = getVal('kg-hc') + getVal('kg-hca');
@@ -159,8 +129,7 @@ function calcKnitGarments() {
         bodyDz = bodyPerPc * 12;
     }
     
-    // ========== COLLAR ==========
-    // Formula: Collar Length × Collar Width × GSM × Quantity / DIVIDER
+    // COLLAR
     let collarPerPc = 0, collarDz = 0;
     if (document.getElementById('ck-collar')?.checked) {
         const CL = getVal('kg-cl') + getVal('kg-cla');
@@ -172,8 +141,7 @@ function calcKnitGarments() {
         }
     }
     
-    // ========== CUFF ==========
-    // Formula: Cuff Length × Cuff Width × 2 × GSM × Quantity / DIVIDER
+    // CUFF
     let cuffPerPc = 0, cuffDz = 0;
     if (document.getElementById('ck-cuff')?.checked) {
         const CL = getVal('kg-cul') + getVal('kg-cula');
@@ -185,8 +153,7 @@ function calcKnitGarments() {
         }
     }
     
-    // ========== POCKET ==========
-    // Formula: Pocket Length × Pocket Width × No. of Pockets × GSM × Quantity / DIVIDER
+    // POCKET
     let pocketPerPc = 0, pocketDz = 0;
     if (document.getElementById('ck-pocket')?.checked) {
         const PL = getVal('kg-pl') + getVal('kg-pla');
@@ -199,8 +166,7 @@ function calcKnitGarments() {
         }
     }
     
-    // ========== HALF-MOON ==========
-    // Formula: Half-moon Length × Half-moon Width × GSM × Quantity / DIVIDER
+    // HALF-MOON
     let hmPerPc = 0, hmDz = 0;
     if (document.getElementById('ck-halfmoon')?.checked) {
         const HL = getVal('kg-hml') + getVal('kg-hmla');
@@ -212,18 +178,15 @@ function calcKnitGarments() {
         }
     }
     
-    // ========== TOTALS ==========
     const totalPerPc = bodyPerPc + collarPerPc + cuffPerPc + pocketPerPc + hmPerPc;
     const totalDz = totalPerPc * 12;
     const totalWithWaste = totalDz * (1 + waste / 100);
     const totalKg = (totalWithWaste / 12) * qty;
     
-    // Format number function
     function fmt(n, d) {
         return (isNaN(n) || n === 0) ? '—' : n.toFixed(d);
     }
     
-    // ========== UPDATE DISPLAYS ==========
     const bodyDisp = document.getElementById('kg-body-disp');
     if (bodyDisp) bodyDisp.innerText = (bodyDz > 0 ? fmt(bodyDz, 3) + ' kg/dz | ' + fmt(bodyPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
     
@@ -242,7 +205,7 @@ function calcKnitGarments() {
     const perPcLabel = document.getElementById('kg-per-pc-label');
     if (perPcLabel) perPcLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste / 12, 4) + ' kg/pc' : '— kg/pc');
     
-    // ========== SHOW/HIDE OPTIONAL ROWS ==========
+    // Optional rows
     const collarRow = document.getElementById('kg-collar-row');
     const cuffRow = document.getElementById('kg-cuff-row');
     const pocketRow = document.getElementById('kg-pocket-row');
@@ -352,19 +315,16 @@ function downloadKnitReport() {
 
 // ========== FORCE RESET ALL INPUTS ON PAGE LOAD ==========
 function forceResetAllInputs() {
-    // Reset all text inputs to EMPTY
     const allInputs = document.querySelectorAll('#page-knit input');
     allInputs.forEach(input => {
         input.value = '';
     });
     
-    // Reset all total spans to 0.0
     const allTotals = document.querySelectorAll('#page-knit .sa-tot');
     allTotals.forEach(span => {
         span.innerHTML = '0.0 ' + knitUnit;
     });
     
-    // Reset all result displays
     const resultIds = [
         'kg-body-disp', 'kg-total-before', 'kg-total-after',
         'kg-total-kg', 'kg-per-dz-label', 'kg-per-pc-label',
@@ -375,7 +335,6 @@ function forceResetAllInputs() {
         if (el) el.innerText = '—';
     });
     
-    // Hide optional rows
     const optionalRows = ['kg-collar-row', 'kg-cuff-row', 'kg-pocket-row', 'kg-halfmoon-row'];
     optionalRows.forEach(id => {
         const row = document.getElementById(id);
@@ -402,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cb) cb.addEventListener('change', toggleOptPanels);
     });
     
-    // Input listeners - NOTE: updateKnitTotals is disabled
+    // Input listeners - Update total spans in real-time
     const inputs = [
         'kg-bl', 'kg-bla', 'kg-sl', 'kg-sla', 'kg-hc', 'kg-hca', 'kg-bgsm',
         'kg-cl', 'kg-cla', 'kg-cw', 'kg-cwa', 'kg-cgsm',
@@ -414,8 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
     inputs.forEach(id => {
         const input = document.getElementById(id);
         if (input) input.addEventListener('input', function() {
-            // updateKnitTotals is disabled - no auto calculation
-            // User must click Calculate button
+            updateTotalSpans();
         });
     });
     
@@ -431,6 +389,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const defaultBtn = document.querySelector('#page-knit .unit-bar .u-btn[data-unit="cm"]');
     if (defaultBtn) defaultBtn.classList.add('active');
     
-    // FORCE RESET ALL INPUTS TO EMPTY ON PAGE LOAD
+    // Force reset all inputs
     forceResetAllInputs();
 });
