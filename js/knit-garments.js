@@ -79,14 +79,6 @@ function toggleOptPanels() {
 }
 
 function updateKnitTotals() {
-    // DISABLED: This function was automatically updating total spans
-    // Now totals will only update when user clicks Calculate button
-    // To re-enable, remove the return statement below
-    
-    return; // <-- This stops the function from running
-    
-    // The code below is kept for reference but will not execute
-    /*
     const pairs = [
         { a: 'kg-bl', b: 'kg-bla', t: 'kg-blt' },
         { a: 'kg-sl', b: 'kg-sla', t: 'kg-slt' },
@@ -110,7 +102,6 @@ function updateKnitTotals() {
     });
     
     calcKnitGarments();
-    */
 }
 
 // ========== RESET ALL INPUTS ON PAGE LOAD ==========
