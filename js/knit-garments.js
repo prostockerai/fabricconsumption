@@ -20,6 +20,9 @@ function updateUnitLabels() {
 }
 
 function convertKnitInputs() {
+    // DISABLED - No automatic conversion and total update
+    return;
+    
     const isInch = (knitUnit === 'inch');
     
     const inputPairs = [
@@ -59,6 +62,7 @@ function convertKnitInputs() {
         }
     });
 }
+
 
 function toggleOptPanels() {
     const showCollar = document.getElementById('ck-collar')?.checked || false;
