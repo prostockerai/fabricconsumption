@@ -45,34 +45,6 @@ function inchToCm(inch) {
     return inch * 2.54;
 }
 
-// Get current unit for a specific page (kg = knit garments, kp = knit pant)
-let knitUnit = 'cm';
-let pantUnit = 'cm';
-
-function getKnitUnit() {
-    return knitUnit;
-}
-
-function setKnitUnit(unit) {
-    knitUnit = unit;
-    // Update unit labels on page
-    document.querySelectorAll('#page-knit .unit-label').forEach(label => {
-        label.textContent = '(' + unit + ')';
-    });
-}
-
-function getPantUnit() {
-    return pantUnit;
-}
-
-function setPantUnit(unit) {
-    pantUnit = unit;
-    // Update unit labels on page
-    document.querySelectorAll('#page-knitpant .unit-label').forEach(label => {
-        label.textContent = '(' + unit + ')';
-    });
-}
-
 // ========== PAGE NAVIGATION ==========
 function showPage(pageId, btn) {
     // Hide all pages
@@ -163,7 +135,7 @@ function generatePDF(title, contentHtml) {
                     window.print(); 
                     setTimeout(function() { window.close(); }, 1000);
                 };
-            </script>
+            <\/script>
         </body>
         </html>
     `);
@@ -220,10 +192,6 @@ window.tot = tot;
 window.saUpdate = saUpdate;
 window.cmToInch = cmToInch;
 window.inchToCm = inchToCm;
-window.getKnitUnit = getKnitUnit;
-window.setKnitUnit = setKnitUnit;
-window.getPantUnit = getPantUnit;
-window.setPantUnit = setPantUnit;
 window.showPage = showPage;
 window.generatePDF = generatePDF;
 window.showToast = showToast;
