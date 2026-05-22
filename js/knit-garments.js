@@ -205,7 +205,7 @@ function calcKnitGarments() {
 
     if (document.getElementById('ck-body')?.checked) {
     if (bodyRow) bodyRow.style.display = 'flex';
-    if (bodyDisp) bodyDisp.innerText = (bodyDz > 0 ? fmt(bodyDz, 3) + ' kg/dz | ' + fmt(bodyPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
+    if (bodyDisp) bodyDisp.innerText = (bodyDz > 0 ? fmt(bodyDz, 3) + ' kg/dz | ' + fmt(bodyPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (bodyRow) bodyRow.style.display = 'none';
     
     const totalBefore = document.getElementById('kg-total-before');
@@ -221,7 +221,7 @@ function calcKnitGarments() {
     if (perDzLabel) perDzLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste, 3) + ' kg/dz' : '— kg/dz');
     
     const perPcLabel = document.getElementById('kg-per-pc-label');
-    if (perPcLabel) perPcLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste / 12, 4) + ' kg/pc' : '— kg/pc');
+    if (perPcLabel) perPcLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste / 12, 4) + ' kg/pcs' : '— kg/pcs');
     
     // Optional rows
     const collarRow = document.getElementById('kg-collar-row');
@@ -235,22 +235,22 @@ function calcKnitGarments() {
     
     if (document.getElementById('ck-collar')?.checked) {
         if (collarRow) collarRow.style.display = 'flex';
-        if (collarDispSpan) collarDispSpan.innerText = (collarDz > 0 ? fmt(collarDz, 3) + ' kg/dz | ' + fmt(collarPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
+        if (collarDispSpan) collarDispSpan.innerText = (collarDz > 0 ? fmt(collarDz, 3) + ' kg/dz | ' + fmt(collarPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (collarRow) collarRow.style.display = 'none';
     
     if (document.getElementById('ck-cuff')?.checked) {
         if (cuffRow) cuffRow.style.display = 'flex';
-        if (cuffDispSpan) cuffDispSpan.innerText = (cuffDz > 0 ? fmt(cuffDz, 3) + ' kg/dz | ' + fmt(cuffPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
+        if (cuffDispSpan) cuffDispSpan.innerText = (cuffDz > 0 ? fmt(cuffDz, 3) + ' kg/dz | ' + fmt(cuffPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (cuffRow) cuffRow.style.display = 'none';
     
     if (document.getElementById('ck-pocket')?.checked) {
         if (pocketRow) pocketRow.style.display = 'flex';
-        if (pocketDispSpan) pocketDispSpan.innerText = (pocketDz > 0 ? fmt(pocketDz, 3) + ' kg/dz | ' + fmt(pocketPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
+        if (pocketDispSpan) pocketDispSpan.innerText = (pocketDz > 0 ? fmt(pocketDz, 3) + ' kg/dz | ' + fmt(pocketPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (pocketRow) pocketRow.style.display = 'none';
     
     if (document.getElementById('ck-halfmoon')?.checked) {
         if (hmRow) hmRow.style.display = 'flex';
-        if (hmDispSpan) hmDispSpan.innerText = (hmDz > 0 ? fmt(hmDz, 3) + ' kg/dz | ' + fmt(hmPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
+        if (hmDispSpan) hmDispSpan.innerText = (hmDz > 0 ? fmt(hmDz, 3) + ' kg/dz | ' + fmt(hmPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (hmRow) hmRow.style.display = 'none';
 }
 
@@ -305,7 +305,7 @@ function downloadKnitReport() {
         
         <table style="width:100%; border-collapse:collapse;">
             <thead>
-                <tr style="background:#f8fafc;"><th>Component</th><th>Per Dozen (kg/dz)</th><th>Per Piece (kg/pc)</th></tr>
+                <tr style="background:#f8fafc;"><th>Component</th><th>Per Dozen (kg/dz)</th><th>Per Piece (kg/pcs)</th></tr>
             </thead>
             <tbody>
                 <tr><td style="font-weight:600;">👕 Body</td><td>${bodyDisp.split('|')[0] || '—'}</td><td>${bodyDisp.split('|')[1] || '—'}</td></tr>
