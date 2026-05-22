@@ -124,7 +124,7 @@
 
       <!-- CUFF PANEL -->
       <div id="panel-cuff" class="opt-panel" style="display:none">
-        <div class="opt-title">🧤 Cuff Measurements (×2 pcs)</div>
+        <div class="opt-title">🧤 Cuff Measurements (×2 pcss)</div>
         <div class="sa-group">
           <div class="sa-label">Cuff Length <span class="unit-label">(cm)</span></div>
           <div class="sa-row">
@@ -205,7 +205,7 @@
 
       <div class="field-row">
         <div class="f-group"><label>Wastage %</label><input class="inp-plain" type="text" inputmode="numeric" id="kg-waste" placeholder="e.g., 9" value=""></div>
-        <div class="f-group"><label>Quantity (pcs)</label><input class="inp-plain" type="text" inputmode="numeric" id="kg-qty" placeholder="e.g., 12" value=""></div>
+        <div class="f-group"><label>Quantity (pcss)</label><input class="inp-plain" type="text" inputmode="numeric" id="kg-qty" placeholder="e.g., 12" value=""></div>
       </div>
       <button class="calc-btn" id="btn-calc-knit">Calculate</button>
     </div>
@@ -216,15 +216,15 @@
         <div class="r-value" id="kg-total-kg">—</div>
         <div class="r-unit">kg (with wastage)</div>
         <div style="font-size: 11px; margin-top: 5px; opacity: 0.7;">
-          <span id="kg-per-dz-label">— kg/dz</span> | <span id="kg-per-pc-label">— kg/pc</span>
+          <span id="kg-per-dz-label">— kg/dz</span> | <span id="kg-per-pcs-label">— kg/pcs</span>
         </div>
       </div>
       <div class="r-card" id="kg-results-list">
-        <div class="r-row"><span>👕 Body</span><span id="kg-body-disp">— kg/dz | — kg/pc</span></div>
-        <div class="r-row" id="kg-collar-row" style="display:none"><span>🧣 Collar</span><span id="kg-collar-disp">— kg/dz | — kg/pc</span></div>
-        <div class="r-row" id="kg-cuff-row" style="display:none"><span>🧤 Cuff</span><span id="kg-cuff-disp">— kg/dz | — kg/pc</span></div>
-        <div class="r-row" id="kg-pocket-row" style="display:none"><span>🪡 Pocket</span><span id="kg-pocket-disp">— kg/dz | — kg/pc</span></div>
-        <div class="r-row" id="kg-halfmoon-row" style="display:none"><span>🌙 Half-moon</span><span id="kg-halfmoon-disp">— kg/dz | — kg/pc</span></div>
+        <div class="r-row" id="kg-body-row"><span>👕 Body</span><span id="kg-body-disp">— kg/dz | — kg/pcs</span></div>
+        <div class="r-row" id="kg-collar-row" style="display:none"><span>🧣 Collar</span><span id="kg-collar-disp">— kg/dz | — kg/pcs</span></div>
+        <div class="r-row" id="kg-cuff-row" style="display:none"><span>🧤 Cuff</span><span id="kg-cuff-disp">— kg/dz | — kg/pcs</span></div>
+        <div class="r-row" id="kg-pocket-row" style="display:none"><span>🪡 Pocket</span><span id="kg-pocket-disp">— kg/dz | — kg/pcs</span></div>
+        <div class="r-row" id="kg-halfmoon-row" style="display:none"><span>🌙 Half-moon</span><span id="kg-halfmoon-disp">— kg/dz | — kg/pcs</span></div>
         <div class="divider"></div>
         <div class="r-row"><span>📦 Total before wastage</span><span id="kg-total-before">— kg/dz</span></div>
         <div class="r-row"><span>⚠️ Total after wastage</span><span id="kg-total-after">— kg/dz</span></div>
@@ -293,7 +293,7 @@
     </div>
     <div class="result-panel">
       <div class="r-card main"><div class="r-value" id="kp-r-dz">—</div><div class="r-unit">kg/dz</div></div>
-      <div class="r-card"><div class="r-row"><span>Per Piece</span><span id="kp-r-pc">— kg</span></div></div>
+      <div class="r-card"><div class="r-row"><span>Per Piece</span><span id="kp-r-pcs">— kg</span></div></div>
       <button class="calc-btn pdf-btn" id="btn-pdf-knitpant">📄 Download Report</button>
     </div>
   </div>
@@ -372,7 +372,7 @@
     </div>
     <div class="field-row">
       <div class="f-group"><label>GSM (g/m²)</label><input class="inp-plain" id="bs-gsm" value="280"></div>
-      <div class="f-group"><label>Pcs in Marker</label><input class="inp-plain" id="bs-pcs" value="10"></div>
+      <div class="f-group"><label>pcss in Marker</label><input class="inp-plain" id="bs-pcss" value="10"></div>
     </div>
     <div class="field-row">
       <div class="f-group"><label>Cutting Waste %</label><input class="inp-plain" id="bs-cwp" value="6"></div>
@@ -403,7 +403,7 @@
             <th style="padding:8px">Marker W (")</th>
             <th style="padding:8px">Cut W (")</th>
             <th style="padding:8px">GSM</th>
-            <th style="padding:8px">Pcs</th>
+            <th style="padding:8px">pcss</th>
             <th style="padding:8px">Cut%</th>
             <th style="padding:8px">Cons/Dz (kg)</th>
             <th style="padding:8px"></th>
@@ -418,7 +418,7 @@
             <td><input class="inp-plain" id="bs-mw-1" value="72" style="width:70px"></td>
             <td><input class="inp-plain" id="bs-cwa-1" value="2" style="width:50px"></td>
             <td><input class="inp-plain" id="bs-gsm-1" value="280" style="width:70px"></td>
-            <td><input class="inp-plain" id="bs-pcs-1" value="10" style="width:50px"></td>
+            <td><input class="inp-plain" id="bs-pcss-1" value="10" style="width:50px"></td>
             <td><input class="inp-plain" id="bs-cwp-1" value="6" style="width:50px"></td>
             <td class="bs-result-1" style="color:#0ea5e9; font-weight:700; text-align:center">—</td>
             <td><button onclick="deleteBookingRow(this)" style="background:#ef4444; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer">✖</button></td>
@@ -431,7 +431,7 @@
             <td><input class="inp-plain" id="bs-mw-2" value="52" style="width:70px"></td>
             <td><input class="inp-plain" id="bs-cwa-2" value="2" style="width:50px"></td>
             <td><input class="inp-plain" id="bs-gsm-2" value="340" style="width:70px"></td>
-            <td><input class="inp-plain" id="bs-pcs-2" value="10" style="width:50px"></td>
+            <td><input class="inp-plain" id="bs-pcss-2" value="10" style="width:50px"></td>
             <td><input class="inp-plain" id="bs-cwp-2" value="6" style="width:50px"></td>
             <td class="bs-result-2" style="color:#0ea5e9; font-weight:700; text-align:center">—</td>
             <td><button onclick="deleteBookingRow(this)" style="background:#ef4444; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer">✖</button></td>
@@ -461,7 +461,7 @@
         1,550,000
       </div>
       <div class="fn-body">
-        ✅ Cons/Dz = (NetCon ÷ PcsInMarker) × 12<br>
+        ✅ Cons/Dz = (NetCon ÷ pcssInMarker) × 12<br>
         ✅ Final = Cons/Dz × (1 + Cutting%/100)<br>
         ✅ 1,550,000 = 39.37² × 1000 (sq inch to sq meter × gram to kg)
       </div>
@@ -514,7 +514,7 @@
 <div class="page" id="page-trims">
   <p class="page-title">🧶 Trims Consumption</p>
   <div class="panel"><div class="panel-title">🪡 Thread</div>
-    <div class="field-row"><div class="f-group"><label>Seam Length (m/pc)</label><input class="inp-plain" id="th-seam" value="10"></div><div class="f-group"><label>No. of Layers</label><input class="inp-plain" id="th-layer" value="2"></div></div>
+    <div class="field-row"><div class="f-group"><label>Seam Length (m/pcs)</label><input class="inp-plain" id="th-seam" value="10"></div><div class="f-group"><label>No. of Layers</label><input class="inp-plain" id="th-layer" value="2"></div></div>
     <div class="field-row"><div class="f-group"><label>Stitch Density (spi)</label><input class="inp-plain" id="th-spi" value="12"></div><div class="f-group"><label>Thread Per Stitch</label><input class="inp-plain" id="th-tps" value="3"></div></div>
     <button class="calc-btn" id="btn-calc-thread">Calculate Thread</button>
     <div class="r-row"><span>Thread / Dozen</span><span id="th-dz" class="badge badge-green">—</span></div>
@@ -526,7 +526,7 @@
   </div>
   <div class="panel"><div class="panel-title">🧵 Interlining</div>
     <div class="field-row"><div class="f-group"><label>Length (cm)</label><input class="inp-plain" id="il-len" value="30"></div><div class="f-group"><label>Width (cm)</label><input class="inp-plain" id="il-wid" value="10"></div></div>
-    <div class="field-row"><div class="f-group"><label>Qty per pc</label><input class="inp-plain" id="il-qty" value="2"></div></div>
+    <div class="field-row"><div class="f-group"><label>Qty per pcs</label><input class="inp-plain" id="il-qty" value="2"></div></div>
     <button class="calc-btn" id="btn-calc-interlining">Calculate Interlining</button>
     <div class="r-row"><span>Interlining / Dozen (m²)</span><span id="il-dz" class="badge badge-green">—</span></div>
   </div>
@@ -540,7 +540,7 @@
     <div class="field-row"><div class="f-group"><label>CM (Cut & Make) ($)</label><input class="inp-plain" id="fob-cm" value="2.20" step="0.01"></div><div class="f-group"><label>Accessories ($)</label><input class="inp-plain" id="fob-acc" value="0.40" step="0.01"></div></div>
     <div class="field-row"><div class="f-group"><label>Overhead %</label><input class="inp-plain" id="fob-oh" value="10"></div><div class="f-group"><label>Profit %</label><input class="inp-plain" id="fob-pr" value="15"></div></div>
     <div class="divider"></div>
-    <div class="field-row"><div class="f-group"><label>Freight (per pc $)</label><input class="inp-plain" id="fob-fr" value="0.50" step="0.01"></div><div class="f-group"><label>Insurance %</label><input class="inp-plain" id="fob-ins" value="0.5" step="0.1"></div></div>
+    <div class="field-row"><div class="f-group"><label>Freight (per pcs $)</label><input class="inp-plain" id="fob-fr" value="0.50" step="0.01"></div><div class="f-group"><label>Insurance %</label><input class="inp-plain" id="fob-ins" value="0.5" step="0.1"></div></div>
     <button class="calc-btn" id="btn-calc-fob">Calculate</button>
     <div style="margin-top:16px"><div class="r-row"><span>Total Cost</span><span id="fob-cost" class="badge badge-blue">—</span></div><div class="r-row"><span>FOB Price</span><span id="fob-fob" class="badge badge-green">—</span></div><div class="r-row"><span>C&F Price</span><span id="fob-cnf" class="badge badge-green">—</span></div><div class="r-row"><span>CIF Price</span><span id="fob-cif" class="badge badge-green">—</span></div></div>
     <button class="calc-btn pdf-btn" id="btn-pdf-fob" style="margin-top:12px">📄 Download Report</button>
@@ -808,23 +808,23 @@
   <div class="panel">
     <div class="panel-title">📦 CONSUMPTION CONVERTERS</div>
     
-    <!-- kg/dz ↔ kg/pc -->
+    <!-- kg/dz ↔ kg/pcs -->
     <div class="conv-group">
       <div class="conv-label">kg/dozen ↔ kg/piece</div>
       <div class="conv-row">
         <input class="conv-inp" id="cv-kgdz" placeholder="kg/dozen" type="number" step="any">
         <span>=</span>
-        <input class="conv-inp" id="cv-kgpc" placeholder="kg/piece" type="number" step="any">
+        <input class="conv-inp" id="cv-kgpcs" placeholder="kg/piece" type="number" step="any">
       </div>
     </div>
     
-    <!-- yards/dz ↔ yards/pc -->
+    <!-- yards/dz ↔ yards/pcs -->
     <div class="conv-group">
       <div class="conv-label">yards/dozen ↔ yards/piece</div>
       <div class="conv-row">
         <input class="conv-inp" id="cv-ydsdz" placeholder="yards/dozen" type="number" step="any">
         <span>=</span>
-        <input class="conv-inp" id="cv-ydspc" placeholder="yards/piece" type="number" step="any">
+        <input class="conv-inp" id="cv-ydspcs" placeholder="yards/piece" type="number" step="any">
       </div>
     </div>
   </div>
@@ -880,7 +880,7 @@
       <span class="fn-highlight">1 kg</span> = 2.20462 lb | <span class="fn-highlight">1 lb</span> = 16 oz<br>
       <span class="fn-highlight">1 OZ/yd²</span> = 33.9057 GSM | <span class="fn-highlight">1 Ligne</span> = 0.635 mm<br>
       <span class="fn-highlight">Tex × 9</span> = Denier | <span class="fn-highlight">Ne × Tex</span> = 590.5 | <span class="fn-highlight">Nm × Tex</span> = 1000<br>
-      <span class="fn-highlight">°F</span> = (°C × 9/5) + 32 | <span class="fn-highlight">kg/dz ÷ 12</span> = kg/pc
+      <span class="fn-highlight">°F</span> = (°C × 9/5) + 32 | <span class="fn-highlight">kg/dz ÷ 12</span> = kg/pcs
     </div>
   </div>
 </div>
