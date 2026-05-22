@@ -221,7 +221,7 @@ function calcKnitGarments() {
     if (perDzLabel) perDzLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste, 3) + ' kg/dz' : '— kg/dz');
     
     const perPcLabel = document.getElementById('kg-per-pcs-label');
-    if (perPcLabel) perPcLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste / 12, 4) + ' kg/pcs' : '— kg/pcs');
+    if (perPcLabel) perPcLabel.innerText = (totalWithWaste > 0 ? fmt(totalWithWaste / 12, 3) + ' kg/pcs' : '— kg/pcs');
     
     // Optional rows
     const collarRow = document.getElementById('kg-collar-row');
