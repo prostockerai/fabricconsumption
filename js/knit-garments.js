@@ -131,16 +131,18 @@ function calcKnitGarments() {
     }
     
     // BODY
+let bodyPerPc = 0, bodyDz = 0;
+if (document.getElementById('ck-body')?.checked) {
     const BL = getVal('kg-bl') + getVal('kg-bla');
     const SL = getVal('kg-sl') + getVal('kg-sla');
     const HC = getVal('kg-hc') + getVal('kg-hca');
     const bGSM = getVal('kg-bgsm') || 0;
     
-    let bodyPerPc = 0, bodyDz = 0;
     if (BL > 0 && SL > 0 && HC > 0 && bGSM > 0 && qty > 0) {
         bodyPerPc = ((BL + SL) * HC * 2 * bGSM) / div;
         bodyDz = bodyPerPc * 12;
     }
+}
     
     // COLLAR
     let collarPerPc = 0, collarDz = 0;
