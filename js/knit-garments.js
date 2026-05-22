@@ -60,16 +60,19 @@ function updateTotalSpans() {
 }
 
 function toggleOptPanels() {
+    const showBody = document.getElementById('ck-body')?.checked || false;
     const showCollar = document.getElementById('ck-collar')?.checked || false;
     const showCuff = document.getElementById('ck-cuff')?.checked || false;
     const showPocket = document.getElementById('ck-pocket')?.checked || false;
     const showHalfmoon = document.getElementById('ck-halfmoon')?.checked || false;
     
+    const bodyPanel = document.getElementById('panel-body');
     const collarPanel = document.getElementById('panel-collar');
     const cuffPanel = document.getElementById('panel-cuff');
     const pocketPanel = document.getElementById('panel-pocket');
     const halfmoonPanel = document.getElementById('panel-halfmoon');
     
+    if (bodyPanel) bodyPanel.style.display = showBody ? 'block' : 'none';
     if (collarPanel) collarPanel.style.display = showCollar ? 'block' : 'none';
     if (cuffPanel) cuffPanel.style.display = showCuff ? 'block' : 'none';
     if (pocketPanel) pocketPanel.style.display = showPocket ? 'block' : 'none';
@@ -80,16 +83,19 @@ function toggleOptPanels() {
 
 // ========== RESET ALL INPUTS ON PAGE LOAD ==========
 function resetAllInputs() {
+    // Reset all text inputs to EMPTY
     const allInputs = document.querySelectorAll('#page-knit input');
     allInputs.forEach(input => {
         input.value = '';
     });
     
+    // Reset all total spans to 0.0
     const allTotals = document.querySelectorAll('#page-knit .sa-tot');
     allTotals.forEach(span => {
         span.innerHTML = '0.0 ' + knitUnit;
     });
     
+    // Reset result displays
     const resultSpans = [
         'kg-body-disp', 'kg-total-before', 'kg-total-after', 
         'kg-total-kg', 'kg-per-dz-label', 'kg-per-pc-label',
@@ -100,12 +106,19 @@ function resetAllInputs() {
         if (span) span.innerText = '—';
     });
     
+    // Hide optional rows (but keep body visible initially)
     const optionalRows = ['kg-collar-row', 'kg-cuff-row', 'kg-pocket-row', 'kg-halfmoon-row'];
     optionalRows.forEach(id => {
         const row = document.getElementById(id);
         if (row) row.style.display = 'none';
     });
+    
+    // Make sure body panel is visible (checkbox is checked by default)
+    const bodyPanel = document.getElementById('panel-body');
+    if (bodyPanel) bodyPanel.style.display = 'block';
 }
+
+
 
 function calcKnitGarments() {
     const div = knitUnit === 'inch' ? 1550000 : 10000000;
@@ -355,11 +368,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Checkbox listeners
-    const checkboxes = ['ck-collar', 'ck-cuff', 'ck-pocket', 'ck-halfmoon'];
-    checkboxes.forEach(id => {
-        const cb = document.getElementById(id);
-        if (cb) cb.addEventListener('change', toggleOptPanels);
-    });
+const checkboxes = ['ck-body', 'ck-collar', 'ck-cuff', 'ck-pocket', 'ck-halfmoon'];
+checkboxes.forEach(id => {
+    const cb = document.getElementById(id);
+    if (cb) cb.addEventListener('change', toggleOptPanels);
+});
     
     // Input listeners - Update total spans in real-time
     const inputs = [
