@@ -205,7 +205,7 @@ function calcKnitGarments() {
 
     if (document.getElementById('ck-body')?.checked) {
     if (bodyRow) bodyRow.style.display = 'flex';
-    if (bodyDisp) bodyDisp.innerText = (bodyDz > 0 ? fmt(bodyDz, 3) + ' kg/dz | ' + fmt(bodyPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
+    if (bodyDisp) bodyDisp.innerText = (bodyDz > 0 ? fmt(bodyDz, 3) + ' kg/dz | ' + fmt(bodyPerPc, 3) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (bodyRow) bodyRow.style.display = 'none';
     
     const totalBefore = document.getElementById('kg-total-before');
