@@ -200,8 +200,13 @@ function calcKnitGarments() {
         return (isNaN(n) || n === 0) ? '—' : n.toFixed(d);
     }
     
+    const bodyRow = document.getElementById('kg-body-row');
     const bodyDisp = document.getElementById('kg-body-disp');
+
+    if (document.getElementById('ck-body')?.checked) {
+    if (bodyRow) bodyRow.style.display = 'flex';
     if (bodyDisp) bodyDisp.innerText = (bodyDz > 0 ? fmt(bodyDz, 3) + ' kg/dz | ' + fmt(bodyPerPc, 4) + ' kg/pc' : '— kg/dz | — kg/pc');
+    } else if (bodyRow) bodyRow.style.display = 'none';
     
     const totalBefore = document.getElementById('kg-total-before');
     if (totalBefore) totalBefore.innerText = (totalDz > 0 ? fmt(totalDz, 3) + ' kg/dz' : '— kg/dz');
