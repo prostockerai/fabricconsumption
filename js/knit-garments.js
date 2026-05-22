@@ -235,22 +235,22 @@ function calcKnitGarments() {
     
     if (document.getElementById('ck-collar')?.checked) {
         if (collarRow) collarRow.style.display = 'flex';
-        if (collarDispSpan) collarDispSpan.innerText = (collarDz > 0 ? fmt(collarDz, 3) + ' kg/dz | ' + fmt(collarPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
+        if (collarDispSpan) collarDispSpan.innerText = (collarDz > 0 ? fmt(collarDz, 3) + ' kg/dz | ' + fmt(collarPerPc, 3) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (collarRow) collarRow.style.display = 'none';
     
     if (document.getElementById('ck-cuff')?.checked) {
         if (cuffRow) cuffRow.style.display = 'flex';
-        if (cuffDispSpan) cuffDispSpan.innerText = (cuffDz > 0 ? fmt(cuffDz, 3) + ' kg/dz | ' + fmt(cuffPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
+        if (cuffDispSpan) cuffDispSpan.innerText = (cuffDz > 0 ? fmt(cuffDz, 3) + ' kg/dz | ' + fmt(cuffPerPc, 3) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (cuffRow) cuffRow.style.display = 'none';
     
     if (document.getElementById('ck-pocket')?.checked) {
         if (pocketRow) pocketRow.style.display = 'flex';
-        if (pocketDispSpan) pocketDispSpan.innerText = (pocketDz > 0 ? fmt(pocketDz, 3) + ' kg/dz | ' + fmt(pocketPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
+        if (pocketDispSpan) pocketDispSpan.innerText = (pocketDz > 0 ? fmt(pocketDz, 3) + ' kg/dz | ' + fmt(pocketPerPc, 3) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (pocketRow) pocketRow.style.display = 'none';
     
     if (document.getElementById('ck-halfmoon')?.checked) {
         if (hmRow) hmRow.style.display = 'flex';
-        if (hmDispSpan) hmDispSpan.innerText = (hmDz > 0 ? fmt(hmDz, 3) + ' kg/dz | ' + fmt(hmPerPc, 4) + ' kg/pcs' : '— kg/dz | — kg/pcs');
+        if (hmDispSpan) hmDispSpan.innerText = (hmDz > 0 ? fmt(hmDz, 3) + ' kg/dz | ' + fmt(hmPerPc, 3) + ' kg/pcs' : '— kg/dz | — kg/pcs');
     } else if (hmRow) hmRow.style.display = 'none';
 }
 
